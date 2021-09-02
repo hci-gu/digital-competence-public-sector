@@ -25,7 +25,9 @@ const SearchSelect = () => {
       }
     >
       {data.map((d) => (
-        <Option value={d.name}>{d.name}</Option>
+        <Option value={d.name} key={`Select_${d.name}`}>
+          {d.name}
+        </Option>
       ))}
     </Select>
   )
