@@ -45,19 +45,18 @@ const ScatterPlot = () => {
     yAxis: {
       label: false,
     },
-    // tooltip: {
-    //   showMarkers: false,
-    //   customContent: function customContent(title, items) {
-    //     const item = items[0]
-    //     if (!item) return null
-    //     return `<div class="g2-tooltip-item" style="margin: 8px;display:flex;justify-content:space-between;>
-    //       <span class="g2-tooltip-item-label">
-    //         Effektivitet / Innovation : ${item.data.Effektivitet} /
-    //         ${item.data.Intern}
-    //       </span>
-    //     </div>`
-    //   },
-    // },
+    tooltip: {
+      showMarkers: false,
+      customContent: function customContent(title, items) {
+        const item = items[0]
+        if (!item) return null
+        return `<div class="g2-tooltip-item" style="margin: 8px;display:flex;justify-content:space-between;>
+          <span class="g2-tooltip-item-label">
+            ${item.data.name}
+          </span>
+        </div>`
+      },
+    },
     pointStyle: {
       fillOpacity: 0.8,
     },

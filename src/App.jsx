@@ -3,7 +3,6 @@ import React from 'react'
 import styled from 'styled-components'
 import ScatterPlot from './components/ScatterPlot'
 import SearchSelect from './components/SearchSelect'
-import { dataAtom } from './state'
 
 const Container = styled.div`
   padding: 1rem;
@@ -59,7 +58,7 @@ const App = () => {
             Grafen visar riktningen för samtliga svenska kommuners
             digitaliseringsstrategier. Underlaget är en innehållsanalys av
             samtliga tillgängliga MRP-dokument, för vidare detaljer kring metod
-            och analys se
+            och analys se{` `}
             <a
               href="https://www.digitalforvaltning.se/rapport/sveriges-kommuners-digitaliseringsstrategier/."
               target="_blank"
