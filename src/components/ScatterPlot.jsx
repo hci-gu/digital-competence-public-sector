@@ -14,10 +14,11 @@ const Container = styled.div`
   }
 `
 
-const offsetForWindowSize = () => {
-  if (window.innerWidth <= 640) return '-125'
-  if (window.innerWidth <= 1024) return '-110'
-  return '-105'
+const annotationStyle = {
+  textAlign: 'center',
+  fontWeight: '800',
+  fontSize: window.innerWidth <= 640 ? 11 : 18,
+  fill: 'rgba(92, 92, 92, 0.5)',
 }
 
 const ScatterPlot = () => {
@@ -25,7 +26,7 @@ const ScatterPlot = () => {
   const [selected] = useAtom(selectedAtom)
 
   var config = {
-    appendPadding: 25,
+    appendPadding: 10,
     width: 'auto',
     height: 'auto',
     data: data.map((d) => ({
@@ -38,18 +39,27 @@ const ScatterPlot = () => {
     colorField: 'selected',
     sizeField: 'selected',
     size: [4, 15],
-    tooltip: {
-      showMarkers: false,
-      customContent: function customContent(title, items) {
-        const item = items[0]
-        if (!item) return null
-        return `<div class="g2-tooltip-item" style="margin: 8px;display:flex;justify-content:space-between;>
-          <span class="g2-tooltip-item-label">
-            Effektivitet / Innovation : ${item.data.Effektivitet} /
-            ${item.data.Intern}
-          </span>
-        </div>`
-      },
+    xAxis: {
+      label: false,
+    },
+    yAxis: {
+      label: false,
+    },
+    // tooltip: {
+    //   showMarkers: false,
+    //   customContent: function customContent(title, items) {
+    //     const item = items[0]
+    //     if (!item) return null
+    //     return `<div class="g2-tooltip-item" style="margin: 8px;display:flex;justify-content:space-between;>
+    //       <span class="g2-tooltip-item-label">
+    //         Effektivitet / Innovation : ${item.data.Effektivitet} /
+    //         ${item.data.Intern}
+    //       </span>
+    //     </div>`
+    //   },
+    // },
+    pointStyle: {
+      fillOpacity: 0.8,
     },
     quadrant: {
       xBaseline: 0,
@@ -58,45 +68,27 @@ const ScatterPlot = () => {
     annotations: [
       {
         type: 'text',
-        position: ['-50', '-110'],
-        content: 'Effektivitet',
-        style: {
-          textAlign: 'center',
-          fontWeight: '500',
-          fill: 'rgb(92, 92, 92)',
-        },
+        position: ['-50', '-50'],
+        content: 'Intern Effektivitet'.toUpperCase(),
+        style: annotationStyle,
       },
       {
         type: 'text',
-        position: ['50', '-110'],
-        content: 'Innovation',
-        style: {
-          textAlign: 'center',
-          fontWeight: '500',
-          fill: 'rgb(92, 92, 92)',
-        },
+        position: ['50', '-50'],
+        content: 'Intern Innovation'.toUpperCase(),
+        style: annotationStyle,
       },
       {
         type: 'text',
-        position: [offsetForWindowSize(), '-50'],
-        content: 'Internt',
-        rotate: -Math.PI / 2,
-        style: {
-          textAlign: 'left',
-          fontWeight: '500',
-          fill: 'rgb(92, 92, 92)',
-        },
+        position: ['-50', '50'],
+        content: 'Extern Effektivitet'.toUpperCase(),
+        style: annotationStyle,
       },
       {
         type: 'text',
-        position: [offsetForWindowSize(), '50'],
-        content: 'Externt',
-        rotate: -Math.PI / 2,
-        style: {
-          textAlign: 'left',
-          fontWeight: '500',
-          fill: 'rgb(92, 92, 92)',
-        },
+        position: ['50', '50'],
+        content: 'Extern Innovation'.toUpperCase(),
+        style: annotationStyle,
       },
     ],
   }

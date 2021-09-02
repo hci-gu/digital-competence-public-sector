@@ -7,20 +7,35 @@ import { dataAtom } from './state'
 
 const Container = styled.div`
   padding: 1rem;
-  width: 75%;
+  width: 80%;
   margin: 0 auto;
 
   > * {
     margin-top: 0.5rem;
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 960px) {
     width: 100%;
     padding: 0.5rem;
   }
 `
 
+const Content = styled.div`
+  display: grid;
+
+  grid-template-columns: 2fr 1fr;
+
+  > div {
+    padding: 1rem;
+  }
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+  }
+`
+
 const Footer = styled.div`
+  margin-top: 1rem;
   width: 100%;
   display: flex;
 
@@ -36,8 +51,33 @@ const Footer = styled.div`
 const App = () => {
   return (
     <Container>
-      <SearchSelect />
-      <ScatterPlot />
+      <Content>
+        <ScatterPlot />
+        <div>
+          <h1>Sveriges kommuners digitaliseringsstrategier</h1>
+          <p>
+            Grafen visar riktningen för samtliga svenska kommuners
+            digitaliseringsstrategier. Underlaget är en innehållsanalys av
+            samtliga tillgängliga MRP-dokument, för vidare detaljer kring metod
+            och analys se
+            <a
+              href="https://www.digitalforvaltning.se/rapport/sveriges-kommuners-digitaliseringsstrategier/."
+              target="_blank"
+            >
+              https://www.digitalforvaltning.se/rapport/sveriges-kommuners-digitaliseringsstrategier/.
+            </a>
+            <br></br>
+            <br></br>
+            Positionering sker på basis av dominerande riktning i hur kommunen
+            mål- och resurssätter digitalisering i MRP. Utgångspunkten är två
+            dimensioner med 1. Effektivitet kontra innovation (fokus på att
+            exploatera givna förutsättningar eller utforska nya möjligheter)
+            samt 2. Internt kontra externt (fokus på direkt nytta för
+            organisationen eller invånare/företag).
+          </p>
+          <SearchSelect />
+        </div>
+      </Content>
       <Footer>
         Skapad av
         <a href="https://hci-gu.github.io/appademin/" target="_blank">
