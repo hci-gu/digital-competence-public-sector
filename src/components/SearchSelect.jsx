@@ -32,7 +32,7 @@ const SearchSelect = () => {
         optionFilterProp="children"
         onChange={onChange}
         filterOption={(input, option) =>
-          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
         }
         options={data
           .filter((d) => d.name)
