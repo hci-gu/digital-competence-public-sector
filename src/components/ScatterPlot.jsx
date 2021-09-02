@@ -14,7 +14,7 @@ const ScatterPlot = () => {
   const [selected] = useAtom(selectedAtom)
 
   var config = {
-    appendPadding: 25,
+    appendPadding: 30,
     width: 1250,
     height: 800,
     data: data.map((d) => ({

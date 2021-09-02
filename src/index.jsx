@@ -9,8 +9,8 @@ import { dataAtom } from './state'
 const mapData = (row) => ({
   ...row,
   name: row.Kommunnamn,
-  x: parseFloat(row.X.replace('−', '-')),
-  y: parseFloat(row.Y.replace('−', '-')),
+  x: row.X ? parseFloat(row.X.replace('−', '-')) : null,
+  y: row.Y ? parseFloat(row.Y.replace('−', '-')) : null,
   population: parseInt(row.Invånare),
 })
 
