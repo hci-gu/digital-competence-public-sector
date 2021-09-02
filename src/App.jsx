@@ -13,6 +13,11 @@ const Container = styled.div`
   > * {
     margin-top: 0.5rem;
   }
+
+  @media (max-width: 640px) {
+    width: 100%;
+    padding: 0.5rem;
+  }
 `
 
 const Footer = styled.div`

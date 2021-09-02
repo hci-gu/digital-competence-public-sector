@@ -4,19 +4,30 @@ import { useAtom } from 'jotai'
 import { dataAtom, selectedAtom } from '../state'
 import styled from 'styled-components'
 
-const Tooltip = styled.span`
-  padding: 0.5rem;
-  margin: 0.5rem;
+const Container = styled.div`
+  height: 800px;
+  padding: 1rem;
+
+  @media (max-width: 640px) {
+    padding: 0;
+    height: 70vh;
+  }
 `
+
+const offsetForWindowSize = () => {
+  if (window.innerWidth <= 640) return '-125'
+  if (window.innerWidth <= 1024) return '-110'
+  return '-105'
+}
 
 const ScatterPlot = () => {
   const [data] = useAtom(dataAtom)
   const [selected] = useAtom(selectedAtom)
 
   var config = {
-    appendPadding: 30,
-    width: 1250,
-    height: 800,
+    appendPadding: 25,
+    width: 'auto',
+    height: 'auto',
     data: data.map((d) => ({
       ...d,
       selected: d.name === selected,
@@ -67,7 +78,7 @@ const ScatterPlot = () => {
       },
       {
         type: 'text',
-        position: ['-105', '-50'],
+        position: [offsetForWindowSize(), '-50'],
         content: 'Internt',
         rotate: -Math.PI / 2,
         style: {
@@ -78,7 +89,7 @@ const ScatterPlot = () => {
       },
       {
         type: 'text',
-        position: ['-105', '50'],
+        position: [offsetForWindowSize(), '50'],
         content: 'Externt',
         rotate: -Math.PI / 2,
         style: {
@@ -89,7 +100,11 @@ const ScatterPlot = () => {
       },
     ],
   }
-  return <Scatter {...config} />
+  return (
+    <Container>
+      <Scatter {...config} />
+    </Container>
+  )
 }
 
 export default ScatterPlot
