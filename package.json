@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview",
-    "postbuild": "react-snap"
+    "serve": "vite preview"
   },
   "keywords": [],
   "author": "",
