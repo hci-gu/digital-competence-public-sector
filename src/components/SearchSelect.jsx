@@ -34,13 +34,12 @@ const SearchSelect = () => {
         filterOption={(input, option) =>
           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
         }
-      >
-        {data.map((d) => (
-          <Option value={d.name} key={`Select_${d.name}`}>
-            {d.name}
-          </Option>
-        ))}
-      </Select>
+        options={data
+          .filter((d) => d.name)
+          .map((d) => ({
+            value: d.name,
+          }))}
+      />
     </Container>
   )
 }
