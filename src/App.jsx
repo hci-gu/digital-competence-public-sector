@@ -38,6 +38,8 @@ const Footer = styled.div`
   width: 100%;
   display: flex;
 
+  margin-top: 3rem;
+
   justify-content: flex-end;
   font-weight: 200;
 
