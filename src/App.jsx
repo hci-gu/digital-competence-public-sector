@@ -1,8 +1,11 @@
 import { useAtom } from 'jotai'
 import React from 'react'
 import styled from 'styled-components'
+import ReScatter from './components/ReScatter'
+import Scatter from './components/Scatter'
 import ScatterPlot from './components/ScatterPlot'
 import SearchSelect from './components/SearchSelect'
+import YearSelect from './components/YearSelect'
 
 const Container = styled.div`
   padding: 1rem;
@@ -53,7 +56,8 @@ const App = () => {
   return (
     <Container>
       <Content>
-        <ScatterPlot />
+        {/* <Scatter /> */}
+        <ReScatter />
         <div>
           <h1>Sveriges kommuners digitaliseringsstrategier</h1>
           <p>
@@ -77,6 +81,7 @@ const App = () => {
             organisationen eller invånare/företag).
           </p>
           <SearchSelect />
+          <YearSelect />
         </div>
       </Content>
       <Footer>

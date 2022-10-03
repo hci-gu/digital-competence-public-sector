@@ -1,7 +1,7 @@
 import React from 'react'
 import { Scatter } from '@ant-design/charts'
 import { useAtom } from 'jotai'
-import { dataAtom, selectedAtom } from '../state'
+import { selectedAtom, selectedDataAtom } from '../state'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -22,17 +22,14 @@ const annotationStyle = {
 }
 
 const ScatterPlot = () => {
-  const [data] = useAtom(dataAtom)
+  const [data] = useAtom(selectedDataAtom)
   const [selected] = useAtom(selectedAtom)
 
   var config = {
     appendPadding: 10,
     width: 'auto',
     height: 'auto',
-    data: data.map((d) => ({
-      ...d,
-      selected: d.name === selected,
-    })),
+    data: [],
     xField: 'x',
     yField: 'y',
     shape: 'circle',
@@ -90,7 +87,14 @@ const ScatterPlot = () => {
         style: annotationStyle,
       },
     ],
+    animation: {
+      update: {
+        animation: 'position-update',
+        duration: 800,
+      },
+    },
   }
+
   return (
     <Container>
       <Scatter {...config} />

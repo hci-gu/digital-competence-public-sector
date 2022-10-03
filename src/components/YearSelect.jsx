@@ -1,7 +1,7 @@
 import React from 'react'
 import { Select } from 'antd'
 import { useAtom } from 'jotai'
-import { selectedAtom, selectedDataAtom } from '../state'
+import { dataAtom, selectedAtom, years, selectedYearAtom } from '../state'
 import styled from 'styled-components'
 
 const { Option } = Select
@@ -14,9 +14,8 @@ const Container = styled.div`
   }
 `
 
-const SearchSelect = () => {
-  const [data] = useAtom(selectedDataAtom)
-  const [, setSelected] = useAtom(selectedAtom)
+const YearSelect = () => {
+  const [selected, setSelected] = useAtom(selectedYearAtom)
 
   const onChange = (value) => {
     setSelected(value)
@@ -27,20 +26,16 @@ const SearchSelect = () => {
       <Select
         style={{ width: 200 }}
         showSearch
-        placeholder="Välj kommun"
+        placeholder="Välj år"
         optionFilterProp="children"
         onChange={onChange}
-        filterOption={(input, option) =>
-          option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
-        }
-        options={data
-          .filter((d) => d.name)
-          .map((d) => ({
-            value: d.name,
-          }))}
+        options={years.map((year) => ({
+          value: year,
+        }))}
+        value={selected}
       />
     </Container>
   )
 }
 
-export default SearchSelect
+export default YearSelect
