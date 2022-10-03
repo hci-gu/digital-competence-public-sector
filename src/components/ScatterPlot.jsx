@@ -1,103 +1,145 @@
-import React from 'react'
-import { Scatter } from '@ant-design/charts'
 import { useAtom } from 'jotai'
-import { selectedAtom, selectedDataAtom } from '../state'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
+import { scaleLinear } from '@visx/scale'
+import { Axis, AxisLeft } from '@visx/axis'
+import { GridRows, GridColumns } from '@visx/grid'
+import { Circle } from '@visx/shape'
+import {} from '@visx/react-spring'
+import { Text } from '@visx/text'
+import { animated, useSpring, useSprings } from '@react-spring/web'
+
+import { extent, format, interpolate } from 'd3'
+
+import { selectedAtom, selectedDataAtom, selectedYearAtom } from '../state'
 
 const Container = styled.div`
-  height: 800px;
+  width: 700;
+  height: 700px;
   padding: 1rem;
 
   @media (max-width: 640px) {
     padding: 0;
     height: 70vh;
   }
+  border: 1px dotted red;
 `
 
-const annotationStyle = {
-  textAlign: 'center',
-  fontWeight: '800',
-  fontSize: window.innerWidth <= 640 ? 11 : 18,
-  fill: 'rgba(92, 92, 92, 0.5)',
-}
+const AnimatedCircle = animated(Circle)
 
 const ScatterPlot = () => {
+  const size = 700
   const [data] = useAtom(selectedDataAtom)
   const [selected] = useAtom(selectedAtom)
+  const [year] = useAtom(selectedYearAtom)
+  const prevYearRef = useRef()
+  const prevNameRef = useRef()
 
-  var config = {
-    appendPadding: 10,
-    width: 'auto',
-    height: 'auto',
-    data: [],
-    xField: 'x',
-    yField: 'y',
-    shape: 'circle',
-    colorField: 'selected',
-    sizeField: 'selected',
-    size: [4, 15],
-    xAxis: {
-      label: false,
-    },
-    yAxis: {
-      label: false,
-    },
-    tooltip: {
-      showMarkers: false,
-      customContent: function customContent(title, items) {
-        const item = items[0]
-        if (!item) return null
-        return `<div class="g2-tooltip-item" style="margin: 8px;display:flex;justify-content:space-between;>
-          <span class="g2-tooltip-item-label">
-            ${item.data.name}
-          </span>
-        </div>`
-      },
-    },
-    pointStyle: {
-      fillOpacity: 0.8,
-    },
-    quadrant: {
-      xBaseline: 0,
-      yBaseline: 0,
-    },
-    annotations: [
-      {
-        type: 'text',
-        position: ['-50', '-50'],
-        content: 'Intern Effektivitet'.toUpperCase(),
-        style: annotationStyle,
-      },
-      {
-        type: 'text',
-        position: ['50', '-50'],
-        content: 'Intern Innovation'.toUpperCase(),
-        style: annotationStyle,
-      },
-      {
-        type: 'text',
-        position: ['-50', '50'],
-        content: 'Extern Effektivitet'.toUpperCase(),
-        style: annotationStyle,
-      },
-      {
-        type: 'text',
-        position: ['50', '50'],
-        content: 'Extern Innovation'.toUpperCase(),
-        style: annotationStyle,
-      },
-    ],
-    animation: {
-      update: {
-        animation: 'position-update',
-        duration: 800,
-      },
-    },
-  }
+  useEffect(() => {
+    prevYearRef.current = year
+  }, [year])
+  useEffect(() => {
+    prevNameRef.current = selected
+  }, [selected])
+
+  const xScale = scaleLinear({
+    range: [10, size],
+    domain: extent(data, (d) => d.x),
+  })
+  const yScale = scaleLinear({
+    range: [size, 10],
+    domain: extent(data, (d) => d.y),
+  })
+
+  const pos = useSpring({
+    from: { value: 0 },
+    to: { value: 1 },
+    reset: prevYearRef.current !== year,
+    config: { duration: !selected ? 1000 : 5000 },
+  })
+  const scale = useSpring({
+    from: { value: 0 },
+    to: { value: 1 },
+    reset: prevNameRef.current !== selected,
+  })
 
   return (
     <Container>
-      <Scatter {...config} />
+      <svg width="100%" height="100%">
+        <AxisLeft scale={yScale} left={10} numTicks={2} />
+        <GridColumns
+          top={10}
+          scale={xScale}
+          height={800}
+          strokeOpacity={0.8}
+          numTicks={2}
+        />
+        <GridRows
+          left={10}
+          scale={xScale}
+          width={800}
+          strokeOpacity={0.8}
+          numTicks={2}
+        />
+        <Text
+          x={size / 4}
+          width={size / 2}
+          y={size / 4}
+          height={size / 2}
+          verticalAnchor="middle"
+          textAnchor="middle"
+          color="#abacaa"
+        >
+          EXTERN EFFEKTIVITET
+        </Text>
+        <Text
+          x={size - size / 4}
+          width={size}
+          y={size / 4}
+          height={size}
+          verticalAnchor="middle"
+          textAnchor="middle"
+          color="#abacaa"
+        >
+          EXTERN INNOVATION
+        </Text>
+        <Text
+          x={size / 4}
+          width={size}
+          y={size - size / 4}
+          height={size}
+          verticalAnchor="middle"
+          textAnchor="middle"
+          color="#abacaa"
+        >
+          INTERN EFFEKTIVITET
+        </Text>
+        <Text
+          x={size - size / 4}
+          width={size}
+          y={size - size / 4}
+          height={size}
+          verticalAnchor="middle"
+          textAnchor="middle"
+          color="#abacaa"
+        >
+          INTERN INNOVATION
+        </Text>
+        {data.map((d, i) => {
+          return (
+            <AnimatedCircle
+              key={i}
+              cx={pos.value.to([0, 1], [d.x2, d.x]).to((v) => xScale(v))}
+              cy={pos.value.to([0, 1], [d.y2, d.y]).to((v) => yScale(v))}
+              r={scale.value
+                .to([0, 1], [5, d.name == selected ? 10 : 5])
+                .to((v) => v)}
+              fill={d.name == selected ? '#ffadce' : '#7da5f9'}
+              fillOpacity={0.8}
+            />
+          )
+        })}
+      </svg>
     </Container>
   )
 }

@@ -1,8 +1,6 @@
 import { useAtom } from 'jotai'
 import React from 'react'
 import styled from 'styled-components'
-import ReScatter from './components/ReScatter'
-import Scatter from './components/Scatter'
 import ScatterPlot from './components/ScatterPlot'
 import SearchSelect from './components/SearchSelect'
 import YearSelect from './components/YearSelect'
@@ -56,8 +54,7 @@ const App = () => {
   return (
     <Container>
       <Content>
-        {/* <Scatter /> */}
-        <ReScatter />
+        <ScatterPlot />
         <div>
           <h1>Sveriges kommuners digitaliseringsstrategier</h1>
           <p>
@@ -80,8 +77,9 @@ const App = () => {
             samt 2. Internt kontra externt (fokus på direkt nytta för
             organisationen eller invånare/företag).
           </p>
-          <SearchSelect />
           <YearSelect />
+          <br></br>
+          <SearchSelect />
         </div>
       </Content>
       <Footer>
