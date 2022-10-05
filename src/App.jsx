@@ -3,15 +3,12 @@ import React from 'react'
 import styled from 'styled-components'
 import ScatterPlot from './components/ScatterPlot'
 import SearchSelect from './components/SearchSelect'
+import YearSelect from './components/YearSelect'
 
 const Container = styled.div`
   padding: 1rem;
   width: 80%;
   margin: 0 auto;
-
-  > * {
-    margin-top: 0.5rem;
-  }
 
   @media (max-width: 960px) {
     width: 100%;
@@ -76,6 +73,8 @@ const App = () => {
             samt 2. Internt kontra externt (fokus på direkt nytta för
             organisationen eller invånare/företag).
           </p>
+          <YearSelect />
+          <br></br>
           <SearchSelect />
         </div>
       </Content>
