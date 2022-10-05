@@ -50,7 +50,12 @@ const ScatterPlot = () => {
     from: { value: 0 },
     to: { value: 1 },
     reset: prevYearRef.current !== year,
-    config: { duration: !selected ? 1000 : 2500 },
+    config: !selected
+      ? {}
+      : {
+          tension: 280,
+          friction: 120,
+        },
   })
   const scale = useSpring({
     from: { value: 0 },

@@ -33,8 +33,6 @@ const Root = () => {
   useData('2022')
   useData('2021')
 
-  const [data] = useAtom(dataAtom)
-
   return (
     <React.StrictMode>
       <App />
