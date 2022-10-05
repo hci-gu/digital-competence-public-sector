@@ -32,7 +32,7 @@ const useTooltip = ({
       // find the nearest polygon to the current mouse position
       const point = localPoint(svgRef.current, event)
       if (!point) return
-      const neighborRadius = 25
+      const neighborRadius = 30
       const closest = voronoiLayout.find(point.x, point.y, neighborRadius)
       if (closest) {
         showTooltip({
@@ -40,15 +40,17 @@ const useTooltip = ({
           tooltipTop: yScale(closest.data.y),
           tooltipData: closest.data,
         })
+      } else {
+        hideTooltip()
       }
-    }, 50),
+    }, 25),
     [xScale, yScale, showTooltip, voronoiLayout]
   )
 
   const handleMouseLeave = useCallback(() => {
     tooltipTimeout = window.setTimeout(() => {
       hideTooltip()
-    }, 300)
+    }, 100)
   }, [hideTooltip])
 
   return { handleMouseMove, handleMouseLeave }

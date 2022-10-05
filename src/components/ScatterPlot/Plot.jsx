@@ -7,7 +7,7 @@ import { withTooltip, Tooltip } from '@visx/tooltip'
 import { animated } from '@react-spring/web'
 
 import { extent } from 'd3'
-import Annotation from './Annotation'
+import Annotation, { QuadrantBackgrounds } from './Annotation'
 import useTooltip from './useTooltip'
 
 const AnimatedCircle = animated(Circle)
@@ -49,6 +49,7 @@ const Plot = ({
   return (
     <div style={{ width: '100%', height: '100%' }}>
       <svg width="100%" height="100%" ref={svgRef}>
+        <QuadrantBackgrounds size={size} padding={padding} />
         <rect
           width={size}
           height={size}
@@ -62,10 +63,28 @@ const Plot = ({
         <AxisLeft scale={yScale} left={padding} numTicks={2} />
         <GridColumns
           top={padding}
+          scale={yScale}
+          height={size}
+          strokeOpacity={0.4}
+          stroke="black"
+          strokeWidth={2}
+          numTicks={1}
+        />
+        <GridColumns
+          top={padding}
           scale={xScale}
           height={size}
           strokeOpacity={0.8}
           numTicks={2}
+        />
+        <GridRows
+          left={padding}
+          scale={xScale}
+          width={size}
+          strokeOpacity={0.4}
+          stroke="black"
+          strokeWidth={2}
+          numTicks={1}
         />
         <GridRows
           left={padding}
@@ -85,7 +104,7 @@ const Plot = ({
               cx={pos.value.to([0, 1], [d.x2, d.x]).to((v) => xScale(v))}
               cy={pos.value.to([0, 1], [d.y2, d.y]).to((v) => yScale(v))}
               r={scale.value
-                .to([0, 1], [5, d.name == selected ? 12.5 : 5])
+                .to([0, 1], [5, d.name == selected ? 12.5 : 4])
                 .to((v) => v)}
               fill={d.name == selected ? '#ffadce' : '#7da5f9'}
               fillOpacity={d.name == selected ? 1 : selected ? 0.5 : 0.8}

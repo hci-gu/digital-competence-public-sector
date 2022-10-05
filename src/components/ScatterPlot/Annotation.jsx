@@ -1,9 +1,45 @@
 import React from 'react'
 import { Text } from '@visx/text'
 
+export const QuadrantBackgrounds = ({ size, padding }) => {
+  const displaySize = size / 2 - padding / 2
+  return (
+    <>
+      <rect
+        x={padding}
+        y={padding}
+        width={displaySize}
+        height={displaySize}
+        fill="#fafdf9"
+      />
+      <rect
+        x={padding / 2 + size / 2}
+        y={padding}
+        width={displaySize}
+        height={displaySize}
+        fill="#fdfcfb"
+      />
+      <rect
+        x={padding}
+        y={padding / 2 + size / 2}
+        width={displaySize}
+        height={displaySize}
+        fill="#fdfcfb"
+      />
+      <rect
+        x={padding / 2 + size / 2}
+        y={padding / 2 + size / 2}
+        width={displaySize}
+        height={displaySize}
+        fill="#fafdf9"
+      />
+    </>
+  )
+}
+
 const Annotation = ({ text, size, position }) => {
-  let x = size / 4
-  let y = size / 4
+  let x = size / 4 + 5
+  let y = size / 4 + 5
   switch (position) {
     case 0:
       break
@@ -33,6 +69,7 @@ const Annotation = ({ text, size, position }) => {
         textAnchor="middle"
         fill="#abacaa"
         scaleToFit
+        fontWeight={700}
       >
         {text}
       </Text>
