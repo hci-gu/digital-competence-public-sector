@@ -40,13 +40,15 @@ export const selectedDataAtom = atom((get) => {
   }, {})
 
   // sort by name
-  return names.map((name) => {
-    return {
-      name,
-      x: dataMap[name]?.x ?? 0,
-      y: dataMap[name]?.y ?? 0,
-      x2: otherMap[name]?.x ?? 0,
-      y2: otherMap[name]?.y ?? 0,
-    }
-  })
+  return names
+    .map((name) => {
+      return {
+        name,
+        x: dataMap[name]?.x ?? null,
+        y: dataMap[name]?.y ?? null,
+        x2: otherMap[name]?.x ?? null,
+        y2: otherMap[name]?.y ?? null,
+      }
+    })
+    .filter((d) => d.x !== null && d.y !== null)
 })
