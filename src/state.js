@@ -26,8 +26,8 @@ export const selectedDataAtom = atom((get) => {
   const selectedYear = get(selectedYearAtom)
   const names = get(allNamesAtom)
 
-  const selectedData = data[selectedYear]
-  const otherData = data[years.filter((y) => y !== selectedYear)[0]]
+  const selectedData = data[selectedYear] ?? []
+  const otherData = data[years.filter((y) => y !== selectedYear)[0]] ?? []
   if (!selectedData) return []
 
   const dataMap = selectedData.reduce((acc, d) => {
